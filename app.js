@@ -109,10 +109,32 @@ if (isPreview) {
 }
 calculate();
 if (isPreview) {
-  ['focal', 'aperture', 'sensor', 'subject-select', 'hyper-button', 'theme-toggle'].forEach((id) => { $(id).disabled = true; });
+  const lockedControls = ['focal', 'aperture', 'sensor', 'subject-select'];
+  lockedControls.forEach((id) => {
+    const control = $(id);
+    control.classList.add('locked-control');
+    control.setAttribute('aria-disabled', 'true');
+    ['pointerdown', 'keydown'].forEach((eventName) => control.addEventListener(eventName, (event) => {
+      event.preventDefault();
+      showCoursePrompt();
+    }));
+  });
   $('preset').querySelector('option[value="custom"]').disabled = true;
   const note = document.createElement('p');
   note.className = 'preview-notice';
-  note.innerHTML = 'In der Vorschau kannst du Fotosituation und Fokusdistanz ausprobieren. <strong>Alle weiteren Einstellungen gehören zum vollständigen Rechner.</strong>';
+  note.innerHTML = '<strong>Kostenlose Vorschau</strong> Du kannst Fotosituation und Fokusdistanz ausprobieren. Brennweite, Blende, Sensorformat und Motiv stehen dir mit einem gebuchten Kurs im vollständigen Rechner zur Verfügung.';
   document.querySelector('.controls-card').append(note);
+  $('hyper-button').classList.add('locked-link');
+  $('hyper-button').addEventListener('click', showCoursePrompt);
+}
+function showCoursePrompt() {
+  let modal = document.querySelector('#course-prompt');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'course-prompt';
+    modal.className = 'course-prompt';
+    modal.innerHTML = '<div class="course-dialog" role="dialog" aria-modal="true" aria-labelledby="course-title"><button class="course-close" type="button" aria-label="Hinweis schliessen">×</button><p class="eyebrow">Vollversion im Kurs</p><h2 id="course-title">Diese Einstellung gehört zur Kurs-Version.</h2><p>Mit einem gebuchten Kurs erhältst du den vollständigen Rechner und weitere Lernmaterialien. Dann kombinierst du Brennweite, Blende, Sensorformat und Motiv ganz frei.</p><a class="course-cta" href="https://www.fotografie-akademie.ch">Kursangebot entdecken <span>→</span></a></div>';
+    modal.addEventListener('click', (event) => { if (event.target === modal || event.target.closest('.course-close')) modal.remove(); });
+    document.body.append(modal);
+  }
 }
