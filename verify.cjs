@@ -7,7 +7,9 @@ const element = id => {
   if (!elements.has(id)) elements.set(id, {value: '', textContent: '', setAttribute(){}, toggleAttribute(){}});
   return elements.get(id);
 };
-const context = vm.createContext({document:{getElementById:element}, console});
+const standaloneWindow = {};
+standaloneWindow.parent = standaloneWindow;
+const context = vm.createContext({document:{getElementById:element}, window:standaloneWindow, console});
 vm.runInContext(source.split("['distance', 'focal', 'aperture', 'sensor'].forEach")[0], context);
 let checks=0;
 for (const [f,n] of [[85,1.8],[35,4],[24,8],[100,4]]) {
