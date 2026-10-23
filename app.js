@@ -13,6 +13,7 @@ const sensors = {
 const presets = { portrait:{distance:2.2,focal:85,aperture:1.8,sensor:'fullframe'}, street:{distance:3,focal:35,aperture:4,sensor:'fullframe'}, landscape:{distance:8,focal:24,aperture:8,sensor:'fullframe'}, macro:{distance:.55,focal:100,aperture:4,sensor:'fullframe'} };
 const fmtNumber = (value, digits) => String(Number(value.toFixed(digits))).replace('.', ',');
 const fmt = (meters, digits = 2, precise = false) => {
+  if (meters === Infinity) return '∞';
   if (meters < 0.00001) return '< 0,01 mm';
   if (meters < 0.01 || (precise && meters < 1)) return `${fmtNumber(meters * 1000, precise ? 2 : meters < 0.001 ? 2 : 1)} mm`;
   if (meters < 1) return `${fmtNumber(meters * 100, 1)} cm`;
@@ -52,9 +53,9 @@ function calculate() {
   const equivalent = Math.round(focal * sensor.crop); $('equivalent').textContent = sensor.note ? `${sensor.note} Entspricht beim Bildwinkel ungefähr ${equivalent} mm am Vollformat; die Schärfentiefe bleibt formatspezifisch.` : sensor.crop === 1 ? '' : `Entspricht beim Bildwinkel ungefähr ${equivalent} mm am Vollformat; die Schärfentiefe bleibt formatspezifisch.`;
   const diffractionLimit = sensor.coc / 0.001342, warning = $('diffraction'); warning.hidden = aperture <= diffractionLimit; warning.textContent = `Hinweis: Ab etwa f/${diffractionLimit.toFixed(1)} kann Beugung die Detailschärfe an diesem Sensor verringern.`;
   const magnification = focal / Math.max(1, subjectDistance - focal), macroNote = $('macro-note'); macroNote.hidden = magnification < .1; macroNote.textContent = `Bei diesem geschätzten Abbildungsmaßstab (≈ ${fmtNumber(magnification, 2)}×) ist dies eine Standard-Näherung: effektive Blende, Fokus-Breathing und Pupillenmaßstab eines konkreten Objektivs sind nicht eingerechnet.`;
-  const hyperButton = $('hyper-button'); hyperButton.disabled = hyperfocal / 1000 > sliderMaximum; hyperButton.title = hyperButton.disabled ? `Die hyperfokale Distanz (${fmt(hyperfocal / 1000)}) liegt außerhalb der 10,16-m-Szene.` : 'Auf die hyperfokale Distanz fokussieren';
+  const hyperButton = $('hyper-button'); hyperButton.disabled = !isPreview && hyperfocal / 1000 > sliderMaximum; hyperButton.title = hyperButton.disabled ? `Die hyperfokale Distanz (${fmt(hyperfocal / 1000)}) liegt außerhalb der 10,16-m-Szene.` : 'Auf die hyperfokale Distanz fokussieren';
   const subjectX = xForDistance(distance), nearX = xForDistance(nearM), farX = farOutsideScene ? sceneRight : xForDistance(farM);
-  const safeNearX = clamp(nearX, 190, 1120), safeFarX = clamp(Math.max(farX, safeNearX + 4), safeNearX + 4, 1124);
+  const safeNearX = nearX, safeFarX = farX;
   $('focus-cone').setAttribute('d', `M ${safeNearX} 84 L ${safeFarX} 84 L ${safeFarX} 335 L ${safeNearX} 335 Z`);
   const fov = 2 * Math.atan(sensor.height / (2 * focal));
   const slope = Math.tan(fov / 2), run = sceneRight - lensX;
@@ -79,6 +80,8 @@ function calculate() {
   // dessen Unterkante. Mit 195 steht sie auf derselben Bodenlinie wie
   // der Fotograf; der Wert gilt für Original und Schärfe-Überlagerung.
   const subjectBaseY = $('subject-select').value === 'person' ? 195 : $('subject-select').value === 'dog' ? 285 : 300;
+  // Clip geometry is expressed in scene coordinates; the subject group is translated.
+  $('focus-clip-path').setAttribute('transform', `translate(${-subjectX} ${-subjectBaseY})`);
   ['person', 'dog', 'object'].forEach(kind => $(`subject-${kind}`).setAttribute('transform', `translate(${subjectX} ${subjectBaseY})`));
   ['person', 'dog', 'object'].forEach(kind => $(`focus-${kind}`).setAttribute('transform', `translate(${subjectX} ${subjectBaseY})`));
 }
@@ -113,11 +116,21 @@ if (isPreview) {
   lockedControls.forEach((id) => {
     const control = $(id);
     control.classList.add('locked-control');
-    control.setAttribute('aria-disabled', 'true');
-    ['pointerdown', 'keydown'].forEach((eventName) => control.addEventListener(eventName, (event) => {
-      event.preventDefault();
-      showCoursePrompt();
-    }));
+    control.disabled = true;
+    const wrapper = document.createElement('span');
+    wrapper.className = 'lock-wrapper';
+    control.before(wrapper);
+    wrapper.append(control);
+    const trigger = document.createElement('button');
+    trigger.type = 'button';
+    trigger.className = 'lock-trigger';
+    trigger.setAttribute('aria-label', 'Kursfunktion: ' + control.closest('.field').querySelector('span').textContent.trim());
+    trigger.addEventListener('click', showCoursePrompt);
+    wrapper.append(trigger);
+    const badge = document.createElement('small');
+    badge.className = 'lock-badge';
+    badge.textContent = '🔒 Im Kurs enthalten';
+    wrapper.after(badge);
   });
   $('preset').querySelector('option[value="custom"]').disabled = true;
   const note = document.createElement('p');
@@ -130,11 +143,14 @@ if (isPreview) {
 function showCoursePrompt() {
   let modal = document.querySelector('#course-prompt');
   if (!modal) {
-    modal = document.createElement('div');
+    modal = document.createElement('dialog');
     modal.id = 'course-prompt';
     modal.className = 'course-prompt';
     modal.innerHTML = '<div class="course-dialog" role="dialog" aria-modal="true" aria-labelledby="course-title"><button class="course-close" type="button" aria-label="Hinweis schliessen">×</button><p class="eyebrow">Vollversion im Kurs</p><h2 id="course-title">Diese Einstellung gehört zur Kurs-Version.</h2><p>Mit einem gebuchten Kurs erhältst du den vollständigen Rechner und weitere Lernmaterialien. Dann kombinierst du Brennweite, Blende, Sensorformat und Motiv ganz frei.</p><a class="course-cta" href="https://www.fotografie-akademie.ch">Kursangebot entdecken <span>→</span></a></div>';
-    modal.addEventListener('click', (event) => { if (event.target === modal || event.target.closest('.course-close')) modal.remove(); });
+    const previousFocus = document.activeElement;
+    modal.addEventListener('click', (event) => { if (event.target === modal || event.target.closest('.course-close')) modal.close(); });
+    modal.addEventListener('close', () => { modal.remove(); previousFocus?.focus(); });
     document.body.append(modal);
+    modal.showModal();
   }
 }
