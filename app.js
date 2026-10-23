@@ -28,12 +28,13 @@ const sliderMaximum = 10.16;
 const sceneDistance = sliderMaximum;
 const lensX = 184, lensY = 171, sceneRight = 1124, sceneTop = 10, sceneBottom = 335;
 const xForDistance = (meters) => lensX + (clamp(meters, 0, sceneDistance) / sceneDistance) * (sceneRight - lensX);
-const minimumDistanceFor = (focal) => Math.max(sliderMinimum, focal / 1000 + .001);
+const minimumDistanceFor = (focal) => Math.ceil(Math.max(sliderMinimum, focal / 1000 + .001) * 100) / 100;
 function setValue(id, value) { $(id).value = value; }
 function calculate() {
-  let distance = +$('distance').value; const focal = +$('focal').value, aperture = +$('aperture').value, sensor = sensors[$('sensor').value];
+  let distance = Math.round(+$('distance').value * 100) / 100; const focal = +$('focal').value, aperture = +$('aperture').value, sensor = sensors[$('sensor').value];
   const validMinimumDistance = minimumDistanceFor(focal); $('distance').min = validMinimumDistance;
   if (distance < validMinimumDistance) { distance = validMinimumDistance; $('distance').value = distance; }
+  $('distance').value = distance;
   const subjectDistance = distance * 1000;
   // Exakte Dünnlinsenformeln mit H = f²/(N·c)+f:
   // Dn = s·(H−f)/(H+s−2f), Df = s·(H−f)/(H−s).
