@@ -1,5 +1,29 @@
 const $ = (id) => document.getElementById(id);
 const isPreview = true;
+// Let an embedding page size the frame to content, including responsive changes.
+if (window.parent !== window) {
+  let lastHeight = 0;
+  const reportHeight = () => {
+    const shell = document.querySelector('.app-shell');
+    const style = getComputedStyle(document.body);
+    const height = Math.ceil(shell.getBoundingClientRect().height
+      + parseFloat(style.paddingTop) + parseFloat(style.paddingBottom) + 2);
+    if (height !== lastHeight) {
+      lastHeight = height;
+      window.parent.postMessage({type: 'fa-preview-height', height}, '*');
+    }
+  };
+  new ResizeObserver(reportHeight).observe(document.querySelector('.app-shell'));
+  window.addEventListener('load', reportHeight);
+  window.addEventListener('resize', reportHeight);
+  window.addEventListener('message', event => {
+    if (event.source === window.parent && event.data?.type === 'fa-preview-measure') {
+      lastHeight = 0;
+      reportHeight();
+    }
+  });
+  document.fonts.ready.then(reportHeight);
+}
 // Kreis der Zerstreuung (CoC) und Crop-Faktoren je Sensorformat.
 const sensors = {
   webcam: { coc: 0.003, crop: 10.8, height: 2.4, note: 'Referenzprofil: 1/4″-Webcam-Sensor (3,2 × 2,4 mm).' }, smartphone: { coc: 0.005, crop: 6, height: 4.29, note: 'Referenzprofil: 1/2,55″-Smartphone-Sensor (5,76 × 4,29 mm).' }, fullframe: { coc: 0.029, crop: 1, height: 24 }, apsc: { coc: 0.019, crop: 1.52, height: 15.6 },
