@@ -1,21 +1,40 @@
-# Schärfentiefe Studio
+# Schärfentiefe Studio · Prüfung der Überarbeitung
 
-Independent German depth-of-field teaching app. Open [the published simulator](https://jannikaiser00-alt.github.io/kamera-werkstatt-56778/simulator/).
+Stand: 24.10.2026. Eigenständige Umsetzung, keine Kopie des fremden Programmcodes.
 
-`index.html` is a self-contained application with original canvas illustrations, no external dependencies or analytics. Existing calculator files remain unchanged.
+## Behobene Fehler
 
-Features: sensor/focal length/aperture/focus/background controls, illustrated preview, ten bokeh shapes, portrait/landscape/video, diffraction, teleconverters and simplified anamorphic view, hyperfocal focusing, framing lock, drag distance diagram, metric/imperial units, print/pixel/custom circle of confusion, saved comparisons, shareable URL and PNG export.
+- Hyperfokaldistanz mit Beugung unabhängig von der bisherigen Fokusentfernung berechnet; Nah- und Ferngrenze gegen das kombinierte Unschärfekriterium geprüft.
+- Bildausschnitt-Sperre berücksichtigt Sensorwechsel, Hochformat, 16:9 und Konverter. Ausgeschaltete Sperre übernimmt keine alte Kompensationswahl mehr.
+- Physikalische Mindestdistanz und Abstand zum Hintergrund auch nach gekoppelten Änderungen eingehalten.
+- Ungültige Eingaben werden angezeigt und beim Verlassen zurückgesetzt; beschädigte gespeicherte Auswahlwerte werden bereinigt.
+- Aktive erweiterte Optionen bleiben in der einfachen Ansicht erkennbar.
+- Hintergrundvergrösserung folgt Brennweite und optional Entfernung. Unschärfe skaliert korrekt zur tatsächlichen Sensorachse in Hochformat und Anamorphot; Weitwinkel erzeugt keine rechteckige Bodenfläche mehr.
+- Unscharfer Hintergrund wird am Rand erweitert statt zur Kaschierung der Ränder vergrössert.
+- Entfernungsdiagramm mit stabiler Skala während des Ziehens, Koordinatenumrechnung und Tastaturbedienung.
+- Vergleiche nach effektiver Brennweite/Blende sortiert. Einheiten und Beschriftungen synchronisiert.
 
-## Calculation
+## Rechenprüfung
 
-Distances are in mm internally. H=f²/(N*c)+f. Near=s*(H-f)/(H+s-2f). Far=s*(H-f)/(H-s), or infinity at s>=H. Background blur=f²*abs(z-s)/(N*z*(s-f)). Default c=sensor diagonal/1500. Diffraction uses a 550 nm Airy diameter and quadratic combination as an approximation.
+39 Testgruppen bestanden, einschliesslich 240 Extremkombinationen und 2’000 deterministischen Zufallsfällen. Nah- und Ferngrenzen werden unabhängig durch Einsetzen in die Strahlen-Unschärfeformel geprüft.
 
-17 test groups passed, including an independent reference case, hyperfocal boundary, converters, image orientation, diffraction and 240 extreme combinations. Browser checks included input updates, saving, framing lock, units, hyperfocal, diffraction limit, portrait and 390px mobile layout.
+Vier im DOFMaster-Rechner bediente Referenzen (gleicher Zerstreuungskreis):
 
-Reference: 85mm f/1.4, focus 3m, c=0.029mm gives near=2.951650534m, far=3.049959819m, total=9.830928495cm, background blur at infinity=1.770399412mm.
+| Brennweite / Blende / Distanz | CoC | Nahgrenze | Ferngrenze |
+|---|---|---|---|
+| 50 mm / f8 / 5 m | 0.030 mm | 3.39 m | 9.53 m |
+| 85 mm / f2 / 3 m | 0.030 mm | 2.93 m | 3.07 m |
+| 24 mm / f16 / 3 m | 0.020 mm | 1.13 m | unendlich |
+| 200 mm / f4 / 10 m | 0.030 mm | 9.71 m | 10.3 m |
 
-## Scope
+Quellen: https://www.dofmaster.com/equations.html und https://www.dofmaster.com/dofjs.html ; https://www.cambridgeincolour.com/tutorials/depth-of-field.htm ; https://www.cambridgeincolour.com/tutorials/diffraction-photography.htm
 
-This is not the original dofsimulator.net application. No original code, images or branding were copied. The app uses original illustrations rather than photographs, two verified camera presets and generic lens presets rather than the full original databases. Other cameras can be entered by sensor dimensions. There is no lens mount compatibility database or lens-specific Fourier/PSF simulation. Bokeh and image blur are illustrative, not a prediction of a particular lens. The UI help explains optical assumptions and limitations.
+## Browser und Gestaltung
 
-Sensor references: [Nikon Z50II](https://www.nikonusa.com/p/z50ii/1788/overview), [Fujifilm X-T50](https://fujifilm-dsc.com/en/manual/x-t50/technical_notes/spec/index.html).
+Eingabevalidierung, Zurücksetzen, Hyperfokal mit Beugung, Meter/Feet (3 m = 9.843 ft), Speichern/Wiederherstellen/Löschen eines Testvergleichs und Teilen-Link geprüft. PNG-Export ausgelöst und Erfolgsmeldung geprüft. Desktop ohne horizontalen Seitenüberlauf; mobile Darstellung bei 390 px visuell geprüft. Keine protokollierten JavaScript-Fehler während dieser Prüfung.
+
+Gestaltung anhand der aktuellen Akademie-Homepage: Blau #11447c, graue Akzente, Roboto und vorhandenes Logo. Mobile Schnellnavigation und grössere Eingabefelder.
+
+## Grenzen
+
+Die Illustration ist eine didaktische, gezeichnete Annäherung, keine fotorealistische Objektivsimulation. Rechenmodell: dünne Linse, Standard-CoC Sensordiagonale/1500; Beugung für 550 nm. Reale Objektive, Fokus-Breathing, Aberrationen und individuelle Schärfewahrnehmung können abweichen. Zwei Kameravorgaben und zehn allgemeine Objektivvorgaben ersetzen keine vollständige Gerätedatenbank. Tests belegen den genannten Umfang, keine absolute Fehlerfreiheit auf jedem Gerät.
