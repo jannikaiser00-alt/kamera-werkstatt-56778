@@ -1,6 +1,6 @@
 # Schärfentiefe Studio · Prüfung der Überarbeitung
 
-Aktueller Stand 25.10.2026: Der ergänzte Boden ist vollständig aus der Darstellung entfernt. Kleine Motive sind an der unteren Bildkante verankert; Füsse und Pfoten werden ausserhalb des Bildes beschnitten. Die folgenden Abschnitte dokumentieren auch frühere Versionen.
+Aktueller Stand 25.10.2026: Der ergänzte Boden ist vollständig aus der Darstellung entfernt. Im Kreuzgang folgen Motive jetzt der Perspektive des vorhandenen Bodens. Bei den Landschaften sind kleine Motive an der unteren Bildkante verankert; Füsse und Pfoten werden ausserhalb des Bildes beschnitten. Die folgenden Abschnitte dokumentieren auch frühere Versionen.
 
 Stand: 24.10.2026. Eigenständige Umsetzung, keine Kopie des fremden Programmcodes.
 
@@ -59,3 +59,10 @@ Die Fotos sind keine dreidimensional vermessenen Szenen. Ihre gesamte Tiefe wird
 Künstlichen Kiesboden und Kontaktschatten entfernt, Bodenasset wird nicht mehr geladen. Personen werden am unteren Bildrand mit 6 Prozent Beschnitt, der Hund mit 16 Prozent Beschnitt platziert, damit auch die Hinterpfoten nicht scheinbar über dem Hintergrund schweben. Beim Entfernen sinkt die Motivoberkante stetig nach unten. Nahe Portraits behalten 8 Prozent Kopfraum. Die projizierte Motivgrösse kommt weiterhin aus dem optischen Modell. Es handelt sich um eine bewusste Ausschnittführung, keine Simulation einer festen Kameraneigung.
 
 Prüfung: 624 Kombinationen aus Motivhöhe, Entfernung und Hoch-/Querformat bestätigen die stetige Bewegung nach unten sowie die Lage der Füsse ausserhalb des Bildrandes. Zusätzlich 60 Browserwechsel (fünf Orte, vier Motive, drei Entfernungen) ohne Lade- oder JavaScript-Fehler. Die 39 optischen Testgruppen bestehen weiterhin.
+
+
+## Originalboden und Flucht · 25.10.2026
+
+Für den Kreuzgang gibt es eine eigene Platzierung auf dem vorhandenen Fotoboden. Der visuell gewählte Fluchtpunkt wird mit demselben Bildausschnitt und Zoom wie das Foto transformiert. Fussposition und horizontale Position laufen beim Verkleinern entlang derselben Fluchtlinie nach hinten. Ein dezenter Kontaktschatten sitzt direkt unter dem Motiv. Es wird kein Boden ergänzt. Bei Landschaften bleibt der Beschnitt an der unteren Bildkante bestehen. Die Perspektive ist eine visuelle Anpassung an das Foto, keine metrische Raumrekonstruktion.
+
+18 geometrische Flucht-/Bodenkontaktprüfungen und 24 Browserkombinationen aus vier Motiven, drei Entfernungen und zwei Formaten bestanden. Keine protokollierten JavaScript-Fehler. Die 624 Randplatzierungsprüfungen für Landschaften bestehen weiter.
