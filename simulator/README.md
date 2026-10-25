@@ -1,5 +1,7 @@
 # Schärfentiefe Studio · Prüfung der Überarbeitung
 
+Aktueller Stand 25.10.2026: Der ergänzte Boden ist vollständig aus der Darstellung entfernt. Kleine Motive sind an der unteren Bildkante verankert; Füsse und Pfoten werden ausserhalb des Bildes beschnitten. Die folgenden Abschnitte dokumentieren auch frühere Versionen.
+
 Stand: 24.10.2026. Eigenständige Umsetzung, keine Kopie des fremden Programmcodes.
 
 ## Behobene Fehler
@@ -50,3 +52,10 @@ Alle 20 Ort-Motiv-Kombinationen im Browser geladen und visuell verglichen. Hochf
 Zusätzlich behoben: Farbstufen durch additive 8-Bit-Mittelung, sichtbare Unterkante der Standfläche, zu weit seitlich platzierte Motive im Hochformat und Export während eines noch laufenden Bildwechsels.
 
 Die Fotos sind keine dreidimensional vermessenen Szenen. Ihre gesamte Tiefe wird für die Hintergrundunschärfe vereinfacht als eine Ebene behandelt. Bereits vorhandene Unschärfe in den Originalfotos bleibt erhalten. Der verfügbare Fotoausschnitt begrenzt die Darstellung bei extremen Bildwinkeln; ein Hinweis erscheint, während die optische Rechnung unverändert bleibt. Die Lichtanpassung ist eine visuelle Annäherung und keine Rekonstruktion der tatsächlichen Beleuchtung vor Ort.
+
+
+## Bildrand-Verankerung · 25.10.2026
+
+Künstlichen Kiesboden und Kontaktschatten entfernt, Bodenasset wird nicht mehr geladen. Personen werden am unteren Bildrand mit 6 Prozent Beschnitt, der Hund mit 16 Prozent Beschnitt platziert, damit auch die Hinterpfoten nicht scheinbar über dem Hintergrund schweben. Beim Entfernen sinkt die Motivoberkante stetig nach unten. Nahe Portraits behalten 8 Prozent Kopfraum. Die projizierte Motivgrösse kommt weiterhin aus dem optischen Modell. Es handelt sich um eine bewusste Ausschnittführung, keine Simulation einer festen Kameraneigung.
+
+Prüfung: 624 Kombinationen aus Motivhöhe, Entfernung und Hoch-/Querformat bestätigen die stetige Bewegung nach unten sowie die Lage der Füsse ausserhalb des Bildrandes. Zusätzlich 60 Browserwechsel (fünf Orte, vier Motive, drei Entfernungen) ohne Lade- oder JavaScript-Fehler. Die 39 optischen Testgruppen bestehen weiterhin.
