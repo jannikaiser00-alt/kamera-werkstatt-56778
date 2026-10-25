@@ -38,3 +38,15 @@ Gestaltung anhand der aktuellen Akademie-Homepage: Blau #11447c, graue Akzente, 
 ## Grenzen
 
 Die Illustration ist eine didaktische, gezeichnete Annäherung, keine fotorealistische Objektivsimulation. Rechenmodell: dünne Linse, Standard-CoC Sensordiagonale/1500; Beugung für 550 nm. Reale Objektive, Fokus-Breathing, Aberrationen und individuelle Schärfewahrnehmung können abweichen. Zwei Kameravorgaben und zehn allgemeine Objektivvorgaben ersetzen keine vollständige Gerätedatenbank. Tests belegen den genannten Umfang, keine absolute Fehlerfreiheit auf jedem Gerät.
+
+## Fotoversion · 25.10.2026
+
+Fünf vom Auftraggeber bereitgestellte Originalfotos eingebunden: Gempen, Basler Münster im Hochformat, Rheinpanorama, Kreuzgang und Merian Gärten. Die Originaldateien auf LaCie wurden nicht verändert. Webkopien sind auf 1800 Pixel lange Kante begrenzt.
+
+Frau, Mann, Kind und Hund wurden mit dem eingebauten Bildgenerator als transparente Fotoatlanten erstellt. Jeder Atlas enthält drei Lichtvarianten: Tageslicht, Abendlicht und warmes Seitenlicht. Der Ort wählt automatisch die passende Variante. Individuelle Helligkeitsanpassungen und Kontaktschatten verbinden die Ebenen. Für Landschaften ohne Standfläche wird eine KI-generierte Kiesfläche ergänzt. Die Montage ist ausdrücklich gekennzeichnet.
+
+Alle 20 Ort-Motiv-Kombinationen im Browser geladen und visuell verglichen. Hochformat/Portrait und Ganzkörper kontrolliert. 39 bisherige Rechentestgruppen weiterhin bestanden. Zusätzliche Prüfung: 20 Blendenkerne, 10 Bilddateien und 12 Motiv-Ausschnitte. Export einer echten PNG-Datei erfolgreich (1067 × 1601 Pixel im geprüften Hochformat). Keine JavaScript-Fehler bei den geprüften Wechseln.
+
+Zusätzlich behoben: Farbstufen durch additive 8-Bit-Mittelung, sichtbare Unterkante der Standfläche, zu weit seitlich platzierte Motive im Hochformat und Export während eines noch laufenden Bildwechsels.
+
+Die Fotos sind keine dreidimensional vermessenen Szenen. Ihre gesamte Tiefe wird für die Hintergrundunschärfe vereinfacht als eine Ebene behandelt. Bereits vorhandene Unschärfe in den Originalfotos bleibt erhalten. Der verfügbare Fotoausschnitt begrenzt die Darstellung bei extremen Bildwinkeln; ein Hinweis erscheint, während die optische Rechnung unverändert bleibt. Die Lichtanpassung ist eine visuelle Annäherung und keine Rekonstruktion der tatsächlichen Beleuchtung vor Ort.
