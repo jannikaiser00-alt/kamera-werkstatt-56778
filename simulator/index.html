@@ -14,13 +14,13 @@
 Nah = s · (H − f) / (H + s − 2f)
 Fern = s · (H − f) / (H − s)
 Fern = ∞, wenn s ≥ H
-Unschärfe(z) = f² · |z − s| / (N · z · (s − f))</pre><p>Standard: c = Sensordiagonale / 1500. Druck: 0.2 mm entlang der langen Papierseite. Ausgabe: zwei Pixel entlang der langen Bildseite. Diese Optionen definieren ein Betrachtungskriterium, keine feste Eigenschaft der Kamera.</p><p>Konverter ändern Brennweite und Blendenzahl mit demselben Faktor. Die Anamorphot-Option erweitert den horizontalen Bildwinkel und verändert die Bokehform vereinfachend. Sie simuliert kein konkretes Objektiv.</p><p>Beugung: Airy-Durchmesser 2.44 · 0.00055 mm · N · (1 + Abbildungsmassstab). Geometrische Unschärfe und Beugung werden näherungsweise quadratisch kombiniert. Übersteigt die Beugung das Kriterium, existiert kein akzeptabel scharfer Bereich.</p><p>Die Hyperfokal-Taste berücksichtigt bei aktivierter Beugung auch den von der Fokusdistanz abhängigen Airy-Durchmesser. Die obige H-Formel beschreibt den Fall ohne Beugung.</p><h3>Grenzen</h3><p>Abstände beziehen sich auf die Hauptebene des idealisierten Objektivs. Fokus-Breathing, Pupillenmassstab, Aberrationen, Sensorfilter und Schärfung sind nicht modelliert. Die Foto-Unschärfe ist eine Näherung mit einer abgetasteten Blendenform. Die zehn Bokehformen verändern die Unschärfe des Fotos. Bereits im Originalfoto vorhandene Unschärfe lässt sich nicht rückgängig machen. Alle Hintergrunddetails werden vereinfacht derselben Entfernung zugeordnet; das Foto ist keine 3D-Rekonstruktion. Fotoausschnitt und maximale Vergrösserung sind begrenzt. Die Personen und der Hund sind KI-generiert, ihre Lichtvariante wird passend zum Ort gewählt. Im Kreuzgang folgen die Motive dem sichtbaren Boden zum Fluchtpunkt; die Füsse bleiben auf der vorhandenen Bodenfläche. Bei den Landschaften hält die Vorschau kleinere Motive an der unteren Bildkante; Füsse und Pfoten bleiben knapp ausserhalb des Ausschnitts. Nahe Portraits behalten etwas Raum über dem Kopf. Diese bewusste Bildgestaltung verhindert schwebende Motive, ohne den Hintergrund zu verändern.</p><p>Die Kameraauswahl enthält zwei geprüfte Modelle. Weitere Kameras lassen sich über die Sensorabmessungen einstellen. Objektivvorgaben sind allgemeine Brennweiten-Blenden-Kombinationen, keine Herstellerdatenbank. Konverterkompatibilität und Bildkreis werden nicht geprüft.</p><p>Formeln und Vergleich: <a href="https://www.dofmaster.com/equations.html" target="_blank" rel="noopener">DOFMaster</a> · <a href="https://www.cambridgeincolour.com/tutorials/depth-of-field.htm" target="_blank" rel="noopener">Cambridge in Colour: Schärfentiefe</a> · <a href="https://www.cambridgeincolour.com/tutorials/diffraction-photography.htm" target="_blank" rel="noopener">Beugung</a>. Die Referenzfälle wurden mit identischem Zerstreuungskreis verglichen.</p><p>Sensorquellen: <a href="https://www.nikonusa.com/p/z50ii/1788/overview" target="_blank" rel="noopener">Nikon Z50II</a> · <a href="https://fujifilm-dsc.com/en/manual/x-t50/technical_notes/spec/index.html" target="_blank" rel="noopener">Fujifilm X-T50</a>.</p><p>Eigenständig programmierte Anwendung mit bereitgestellten Originalfotos und KI-generierten Motiven. Kein Originalcode oder Bildmaterial von dofsimulator.net übernommen.</p></dialog><script>/* Independent thin-lens model. Public distances: m. Optical lengths: mm. */
+Unschärfe(z) = f² · |z − s| / (N · z · (s − f))</pre><p>Standard: c = Sensordiagonale / 1500. Druck: 0.2 mm entlang der langen Papierseite. Ausgabe: zwei Pixel entlang der langen Bildseite. Diese Optionen definieren ein Betrachtungskriterium, keine feste Eigenschaft der Kamera.</p><p>Konverter ändern Brennweite und Blendenzahl mit demselben Faktor. Die Anamorphot-Option erweitert den horizontalen Bildwinkel und verändert die Bokehform vereinfachend. Sie simuliert kein konkretes Objektiv.</p><p>Beugung: Airy-Durchmesser 2.44 · 0.00055 mm · N · (1 + Abbildungsmassstab). Geometrische Unschärfe und Beugung werden näherungsweise quadratisch kombiniert. Übersteigt die Beugung das Kriterium, existiert kein akzeptabel scharfer Bereich.</p><p>Die Hyperfokal-Taste berücksichtigt bei aktivierter Beugung auch den von der Fokusdistanz abhängigen Airy-Durchmesser. Die obige H-Formel beschreibt den Fall ohne Beugung.</p><h3>Grenzen</h3><p>Abstände beziehen sich auf die Hauptebene des idealisierten Objektivs. Fokus-Breathing, Pupillenmassstab, Aberrationen, Sensorfilter und Schärfung sind nicht modelliert. Die Foto-Unschärfe ist eine Näherung mit einer abgetasteten Blendenform. Die zehn Bokehformen verändern die Unschärfe des Fotos. Bereits im Originalfoto vorhandene Unschärfe lässt sich nicht rückgängig machen. Wände und Landschaft werden derselben Hintergrundentfernung zugeordnet. Der Kreuzgangboden erhält eine angenäherte Tiefenebene und ortsabhängige Unschärfe. Das Foto ist keine 3D-Rekonstruktion. Die Originalfotos enthalten keine EXIF-Aufnahmedaten. Die Projektion verwendet angenommene 12 mm an Vollformat als Referenz; dies ist keine vermessene Kalibrierung. Ausserhalb des Fotos fehlen Bilddaten. Bei starken Vergrösserungen begrenzt die Bildauflösung die Qualität. Die Personen und der Hund sind KI-generiert, ihre Lichtvariante wird passend zum Ort gewählt. Im Kreuzgang bestimmen Entfernung und Kamerahöhe den Bodenkontakt unabhängig von der Motivgrösse. Die Kamerahöhe ist unter Erweitert einstellbar. Sehr nahe Motive können angeschnitten sein; hinter der darstellbaren Bodenfläche wird kein Motiv eingeblendet. Die Bodenunschärfe nutzt einen angenäherten Gaußfilter. Bei den Landschaften hält die Vorschau kleinere Motive an der unteren Bildkante; Füsse und Pfoten bleiben knapp ausserhalb des Ausschnitts. Nahe Portraits behalten etwas Raum über dem Kopf. Diese bewusste Bildgestaltung verhindert schwebende Motive, ohne den Hintergrund zu verändern.</p><p>Die Kameraauswahl enthält zwei geprüfte Modelle. Weitere Kameras lassen sich über die Sensorabmessungen einstellen. Objektivvorgaben sind allgemeine Brennweiten-Blenden-Kombinationen, keine Herstellerdatenbank. Konverterkompatibilität und Bildkreis werden nicht geprüft.</p><p>Formeln und Vergleich: <a href="https://www.dofmaster.com/equations.html" target="_blank" rel="noopener">DOFMaster</a> · <a href="https://www.cambridgeincolour.com/tutorials/depth-of-field.htm" target="_blank" rel="noopener">Cambridge in Colour: Schärfentiefe</a> · <a href="https://www.cambridgeincolour.com/tutorials/diffraction-photography.htm" target="_blank" rel="noopener">Beugung</a>. Die Referenzfälle wurden mit identischem Zerstreuungskreis verglichen.</p><p>Sensorquellen: <a href="https://www.nikonusa.com/p/z50ii/1788/overview" target="_blank" rel="noopener">Nikon Z50II</a> · <a href="https://fujifilm-dsc.com/en/manual/x-t50/technical_notes/spec/index.html" target="_blank" rel="noopener">Fujifilm X-T50</a>.</p><p>Eigenständig programmierte Anwendung mit bereitgestellten Originalfotos und KI-generierten Motiven. Kein Originalcode oder Bildmaterial von dofsimulator.net übernommen.</p></dialog><script>/* Independent thin-lens model. Public distances: m. Optical lengths: mm. */
 (function(root){
 'use strict';
 const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
 const sensors=[['ff','Vollformat · 36 × 24',36,24],['aps','APS-C / DX · 23.5 × 15.7',23.5,15.7],['canon','APS-C Canon · 22.3 × 14.9',22.3,14.9],['apsh','APS-H · 27.9 × 18.6',27.9,18.6],['mft','Micro Four Thirds · 17.3 × 13',17.3,13],['one','1 Zoll · 13.2 × 8.8',13.2,8.8],['compact','1/2.3 Zoll · 6.17 × 4.55',6.17,4.55],['mf','Mittelformat · 43.8 × 32.9',43.8,32.9],['645','645 · 56 × 41.5',56,41.5],['66','6 × 6 · 56 × 56',56,56],['67','6 × 7 · 69 × 56',69,56],['45','4 × 5 Zoll · 120 × 96',120,96],['810','8 × 10 Zoll · 240 × 192',240,192],['custom','Eigene Abmessungen',36,24]];
-const defaults={focal:85,aperture:1.4,distance:3,background:12,infinity:true,width:36,height:24,sensor:'ff',camera:'',lens:'',converter:1,anamorphic:1,orientation:'landscape',video:false,advanced:false,units:'metric',model:'woman',modelHeight:1.7,scene:'city',bokeh:'circle',diffraction:false,cocMode:'standard',customCoc:.029,printWidth:300,outputPixels:3840,lock:false,compensate:'distance',constGap:false,scaleBackground:false,grid:false};
-const ranges={focal:[8,1200],aperture:[.7,64],distance:[.1,10000],background:[.11,100000],width:[2,360],height:[2,280],converter:[.5,2],anamorphic:[1,2],modelHeight:[.2,3],customCoc:[.001,.2],printWidth:[100,2000],outputPixels:[640,16384]};
+const defaults={focal:85,aperture:1.4,distance:3,background:12,infinity:true,width:36,height:24,sensor:'ff',camera:'',lens:'',converter:1,anamorphic:1,orientation:'landscape',video:false,advanced:false,units:'metric',model:'woman',modelHeight:1.7,cameraHeight:1.25,scene:'city',bokeh:'circle',diffraction:false,cocMode:'standard',customCoc:.029,printWidth:300,outputPixels:3840,lock:false,compensate:'distance',constGap:false,scaleBackground:false,grid:false};
+const ranges={focal:[8,1200],aperture:[.7,64],distance:[.1,10000],background:[.11,100000],width:[2,360],height:[2,280],converter:[.5,2],anamorphic:[1,2],modelHeight:[.2,3],cameraHeight:[.1,2.5],customCoc:[.001,.2],printWidth:[100,2000],outputPixels:[640,16384]};
 const choices={sensor:sensors.map(x=>x[0]),camera:['','nikon','fuji'],lens:['','24,1.4','35,1.8','50,1.8','56,1.2','85,1.4','105,2.8','135,1.8','200,2.8','400,5.6','600,4'],orientation:['landscape','portrait'],units:['metric','imperial'],model:['woman','man','child','dog'],scene:['city','park','mountain','lights','studio'],bokeh:['circle','5','6','7','8','9','heart','star','ring','oval'],cocMode:['standard','custom','print','pixels'],compensate:['distance','focal']};
 function minDistance(p){return Math.max(.1,p.focal*p.converter/1000+.01);}
 function sanitize(input){
@@ -58,7 +58,7 @@ function change(previous,key,value){
  if(['width','height'].includes(key)){p.sensor='custom';p.camera='';}
  if(key==='lens'&&value)[p.focal,p.aperture]=value.split(',').map(Number);
  if(['focal','aperture'].includes(key))p.lens='';
- if(key==='model')p.modelHeight={woman:1.7,man:1.8,child:1.1,dog:.65}[value];
+ if(key==='model'){p.modelHeight={woman:1.7,man:1.8,child:1.1,dog:.65}[value];}
  if(key==='background')p.infinity=false;
  if(p.lock&&['focal','lens','converter','sensor','camera','width','height','orientation','video','distance'].includes(key)){
   const r=optics(p);
@@ -95,10 +95,10 @@ const num=(id,label,min,max,step,cls='')=>`<label class="${cls}" id="${id}Label"
 const slider=(id,label,min,max,step,unit)=>`<div class="value-row"><label for="${id}">${label}</label><span><input id="${id}" type="number" inputmode="decimal" min="${min}" max="${max}" step="any"> ${unit}</span></div><input type="range" id="${id}Range" min="0" max="1000" aria-label="${label} einstellen"><div class="ticks" id="${id}Ticks"></div>`;
 const section=(n,title,html)=>`<section id="section-${n}"><h2>${n}<span>${title}</span>${n==='02'?'<output id="crop"></output>':''}</h2>${html}</section>`;
 $('controls').innerHTML=`<div class="mode-row">${check('advanced','Erweitert')}${select('units','Einheiten',[['metric','Meter'],['imperial','Feet']])}</div>`+
-section('01','Motiv & Umgebung',`<div class="two">${select('model','Motiv',[['woman','Frau'],['man','Mann'],['child','Kind'],['dog','Hund']])}${select('scene','Hintergrund',[['city','Basel · Münster'],['lights','Basel · Rhein'],['mountain','Gempen'],['park','Merian Gärten'],['studio','Basel · Kreuzgang']])}</div><div class="two advanced">${num('modelHeight','Motivhöhe (m)',.2,3,.05)}${select('orientation','Bildformat',[['landscape','Querformat'],['portrait','Hochformat']])}</div>${check('video','Videoformat 16:9','advanced')}`)+
+section('01','Motiv & Umgebung',`<div class="two">${select('model','Motiv',[['woman','Frau'],['man','Mann'],['child','Kind'],['dog','Hund']])}${select('scene','Hintergrund',[['city','Basel · Münster'],['lights','Basel · Rhein'],['mountain','Gempen'],['park','Merian Gärten'],['studio','Basel · Kreuzgang']])}</div><div class="two advanced">${num('modelHeight','Motivhöhe (m)',.2,3,.05)}${select('orientation','Bildformat',[['landscape','Querformat'],['portrait','Hochformat']])}</div>${num('cameraHeight','Kamerahöhe über Boden (m)',.1,2.5,.05,'advanced')}${check('video','Videoformat 16:9','advanced')}`)+
 section('02','Kamera & Sensor',select('camera','Kameravoreinstellung',[['','Sensor frei wählen'],['nikon','Nikon Z50II'],['fuji','Fujifilm X-T50']],'advanced')+select('sensor','Sensorformat',sensors.map(x=>[x[0],x[1]]))+`<div class="two advanced">${num('width','Breite (mm)',2,360,.1)}${num('height','Höhe (mm)',2,280,.1)}</div>`)+
 section('03','Objektiv',select('lens','Objektivvorgabe',[['','Freie Einstellung'],['24,1.4','24 mm f/1.4 · Weitwinkel'],['35,1.8','35 mm f/1.8 · Reportage'],['50,1.8','50 mm f/1.8 · Standard'],['56,1.2','56 mm f/1.2 · Portrait'],['85,1.4','85 mm f/1.4 · Portrait'],['105,2.8','105 mm f/2.8 · Detail'],['135,1.8','135 mm f/1.8 · Portrait'],['200,2.8','200 mm f/2.8 · Tele'],['400,5.6','400 mm f/5.6 · Tiere'],['600,4','600 mm f/4 · Supertele']],'advanced')+slider('focal','Brennweite',8,1200,1,'mm')+slider('aperture','Blende f/',.7,64,.1,'')+`<div class="two advanced">${select('converter','Konverter',[[1,'Keiner · 1×'],[.58,'Reducer · 0.58×'],[.64,'Reducer · 0.64×'],[.71,'Reducer · 0.71×'],[1.4,'Tele · 1.4×'],[1.7,'Tele · 1.7×'],[2,'Tele · 2×']])}${select('anamorphic','Anamorphot',[[1,'Keiner'],[1.33,'1.33×'],[1.5,'1.5×'],[2,'2×']])}</div><p class="hint advanced" id="effective"></p>`)+
-section('04','Entfernungen',slider('distance','Motiv / Fokus',.1,10000,.1,'<span class="unit">m</span>')+slider('background','Hintergrund',.11,100000,.1,'<span class="unit">m</span>')+check('infinity','Hintergrund im Unendlichen')+check('constGap','Abstand Motiv–Hintergrund beibehalten','advanced')+check('scaleBackground','Hintergrund mit Entfernung verkleinern','advanced'))+
+section('04','Entfernungen',slider('distance','Motiv / Fokus',.1,10000,.1,'<span class="unit">m</span>')+slider('background','Hintergrund',.11,100000,.1,'<span class="unit">m</span>')+check('infinity','Hintergrund im Unendlichen')+check('constGap','Abstand Motiv–Hintergrund beibehalten','advanced'))+
 section('05','Bildausschnitt',check('lock','Motivgrösse im Bild beibehalten')+select('compensate','Bei Formatwechsel ausgleichen über',[['distance','Motiventfernung'],['focal','Brennweite']])+`<div class="presets">${[['.32','Gesicht'],['.75','Portrait'],['1.15','Halbfigur'],['1.5','Dreiviertel'],['full','Ganzkörper']].map(([v,l])=>`<button data-frame="${v}">${l}</button>`).join('')}</div>`);
 $('controls').insertAdjacentHTML('beforeend','<p id="inputError" class="input-error" role="alert" hidden></p>');
 $('simToolbar').innerHTML=select('bokeh','Bokeh',[['circle','Rund'],['5','5 Lamellen'],['6','6 Lamellen'],['7','7 Lamellen'],['8','8 Lamellen'],['9','9 Lamellen'],['heart','Herz'],['star','Stern'],['ring','Ring'],['oval','Oval']])+check('grid','Raster')+check('diffraction','Beugung','advanced')+'<button id="exportBtn">Bild speichern</button>';
@@ -162,8 +162,9 @@ function render(forceInputs=false){
   $(key+'Ticks').innerHTML=`<span>${fmt(min/factor,min<1?2:1)}</span><span>logarithmische Skala</span><span>${fmt(max/factor,0)}</span>`;
  }
  document.querySelectorAll('.unit').forEach(e=>e.textContent=state.units==='imperial'?'ft':'m');
+ $('cameraHeightLabel').hidden=state.scene!=='studio';
  $('background').disabled=$('backgroundRange').disabled=state.infinity;$('compensateLabel').hidden=!state.lock;
- $('crop').textContent=fmt(r.crop,2)+'× Crop';$('effective').textContent=`Effektiv ${fmt(r.f,1)} mm · f/${fmt(r.N,2)} · Bildwinkel horizontal ${fmt(2*Math.atan(r.viewW/(2*r.f))*180/Math.PI,1)}°`;
+ $('crop').textContent=fmt(r.crop,2)+'× Crop';$('effective').textContent=`Effektiv ${fmt(r.f,1)} mm · f/${fmt(r.N,2)} · Bildwinkel horizontal ${fmt(2*Math.atan(r.viewW/(2*r.f*(1+r.magnification)))*180/Math.PI,1)}°`;
  $('liveBadge').textContent=fmt(r.f,1)+' mm · f/'+fmt(r.N,1);$('blurValue').textContent=fmt(r.totalBlur,3)+' mm / '+fmt(100*r.totalBlur/Math.max(r.w,r.h),2)+' %';$('fieldValue').textContent=distance(r.fieldW)+' × '+distance(r.fieldH);
  $('total').textContent=r.diffractionLimited?'Kein Bereich':distance(r.total);$('mobileTotal').textContent=$('total').textContent;$('near').textContent=r.diffractionLimited?'—':distance(r.near);$('far').textContent=r.diffractionLimited?'—':distance(r.far);
  $('front').textContent=r.diffractionLimited?'—':distance(r.front)+(Number.isFinite(r.total)&&r.total>0?' · '+fmt(100*r.front/r.total,0)+' %':'');$('back').textContent=r.diffractionLimited?'—':distance(r.back)+(Number.isFinite(r.total)&&r.total>0?' · '+fmt(100*r.back/r.total,0)+' %':'');$('hyperfocal').textContent=distance(r.H);$('cocValue').textContent=fmt(r.coc,4)+' mm';
@@ -194,7 +195,7 @@ const photoScenes={
  lights:{asset:'basel-rhein',name:'Basel · Rhein bei Sonnenuntergang',light:1,exposure:.78,focus:[.53,.48],subjectX:.30},
  mountain:{asset:'gempen',name:'Gempen · Abendpanorama',light:1,exposure:.92,focus:[.53,.48],subjectX:.32},
  park:{asset:'merian',name:'Merian Gärten · Weiher',light:0,exposure:.96,focus:[.52,.52],subjectX:.38},
- studio:{asset:'kreuzgang',name:'Basel · Kreuzgang',light:2,exposure:.84,focus:[.50,.52],subjectX:.35,floorVanishing:[.50,.75]}
+ studio:{asset:'kreuzgang',name:'Basel · Kreuzgang',light:2,exposure:.84,focus:[.50,.64],subjectX:.35,floorVanishing:[.50,.64],cameraHeight:1.25}
 };
 const subjectCrops={
   "woman": [
@@ -318,11 +319,32 @@ function subjectPlacement(modelHeight,fieldHeight,canvasHeight,footCrop=.06){
  const size=modelHeight/fieldHeight*canvasHeight;
  return {size,top:Math.max(canvasHeight*.08,canvasHeight-size*(1-footCrop))};
 }
-function floorPlacement(size,W,H,vx,vy,referenceX){
- const ratio=size/(H*.85);
- const feet=vy+(H*.96-vy)*ratio;
- const top=Math.max(H*.08,feet-size);
- return {size,top,x:Math.min(W*.75,Math.max(W*.25,vx+(referenceX-vx)*ratio)),feet:top+size};
+// Rectilinear reference camera: 12 mm on 36 x 24 mm, portrait rotated.
+// Source EXIF is absent; this is an explicit calibration assumption.
+function photoProjection(r,W,H,im,config){
+ const referenceWidth=im.width<im.height?24:36;
+ const imageDistance=r.f*(1+r.magnification);
+ const dw=W*referenceWidth/r.viewW*imageDistance/12,dh=dw*im.height/im.width;
+ const dx=W*.5-config.focus[0]*dw,dy=H*.5-config.focus[1]*dh;
+ return {dw,dh,dx,dy,limited:dx>0||dy>0||dx+dw<W||dy+dh<H};
+}
+function floorPlacement(modelHeight,fieldHeight,W,H,vx,vy,cameraHeight=1.25){
+ const pixelsPerMetre=H/fieldHeight,size=modelHeight*pixelsPerMetre;
+ const feet=vy+cameraHeight*pixelsPerMetre;
+ return {size,top:feet-size,x:vx-.35*pixelsPerMetre,feet};
+}
+// Approximate continuous ground plane; only the photographed floor is affected.
+function drawFloor(ctx,W,H,r,projection,config){
+ const {dx,dy,dw,dh}=projection,hy=dy+config.floorVanishing[1]*dh;
+ ctx.save();ctx.beginPath();ctx.moveTo(dx,dy+dh);ctx.lineTo(dx,dy+dh*.88);ctx.lineTo(dx+dw*.27,dy+dh*.765);ctx.lineTo(dx+dw*.80,dy+dh*.765);ctx.lineTo(dx+dw,dy+dh*.94);ctx.lineTo(dx+dw,dy+dh);ctx.closePath();ctx.clip();
+ const step=Math.max(2,H/48),s=state.distance*1000;
+ for(let y=Math.max(0,dy+dh*.765);y<H;y+=step){
+  const depth=state.cameraHeight*H/r.fieldH*state.distance/Math.max(1,y+step/2-hy)*1000;
+  const circle=Math.abs(r.f*r.f*(depth-s)/(r.N*depth*(s-r.f)));
+  const sigma=Math.min(80,Math.hypot(circle,state.diffraction?r.airy:0)*H/r.h*.25);
+  ctx.save();ctx.beginPath();ctx.rect(0,y,W,step+.5);ctx.clip();ctx.filter=`blur(${sigma}px)`;ctx.drawImage(bg,0,0);ctx.restore();
+ }
+ ctx.restore();
 }
 function drawScene(r){
  const config=photoScenes[state.scene],photo=asset(config.asset),person=asset(state.model);
@@ -330,26 +352,30 @@ function drawScene(r){
  $('photoStatus').hidden=photoReady;$('photoStatusText').textContent=failed?'Ein Foto konnte nicht geladen werden. Bitte erneut versuchen.':'Fotos und passende Lichtvariante werden geladen …';$('retryPhotos').hidden=!failed;$('exportBtn').disabled=!photoReady;
  const canvas=$('sceneCanvas'),g=geometry(state,r),{W,H,pixelsPerMm}=g;canvas.width=W;canvas.height=H;canvas.style.aspectRatio=W+'/'+H;const c=canvas.getContext('2d');
  $('photoCaption').textContent=config.name+' · '+['Tageslicht','Abendlicht','Warmes Seitenlicht'][config.light];
- const zoomRaw=g.backgroundScale/1.7,zoom=clamp(zoomRaw,1,12);
- $('photoLimit').textContent=zoomRaw<1?'Der Fotoausschnitt ist am Bildrand begrenzt. Die berechneten Werte bleiben unverändert.':zoomRaw>12?'Die Vorschau begrenzt die Vergrösserung des Hintergrundfotos. Die berechneten Werte bleiben unverändert.':'';
  if(!photoReady){c.fillStyle='#e8edf3';c.fillRect(0,0,W,H);return;}
- const im=photo.image;bg.width=W;bg.height=H;const b=bg.getContext('2d');const cover=Math.max(W/im.width,H/im.height)*zoom,dw=im.width*cover,dh=im.height*cover;
- const dx=clamp(W*.5-config.focus[0]*dw,W-dw,0),dy=clamp(H*.5-config.focus[1]*dh,H-dh,0);b.drawImage(im,dx,dy,dw,dh);
+ const im=photo.image,projection=photoProjection(r,W,H,im,config),{dx,dy,dw,dh}=projection;
+ $('photoLimit').textContent=(projection.limited?'Ausserhalb des Originalfotos fehlen Bilddaten. ':'')+'Foto-Projektion: angenommene Referenz 12 mm / Vollformat; Aufnahmedaten fehlen.';
+ bg.width=W;bg.height=H;const b=bg.getContext('2d');b.fillStyle='#e8edf3';b.fillRect(0,0,W,H);b.drawImage(im,dx,dy,dw,dh);
  blurPhoto(c,W,H,g.blurDiameter*.5,state.bokeh,1/state.anamorphic);
+ if(config.floorVanishing)drawFloor(c,W,H,r,projection,config);
  let placement=subjectPlacement(state.modelHeight,r.fieldH,H,state.model==='dog'?.16:.06);
  const referenceX=W*(W/H<.9?.5:config.subjectX);
  if(config.floorVanishing){
   const [vx,vy]=config.floorVanishing;
-  placement=floorPlacement(placement.size,W,H,dx+vx*dw,dy+vy*dh,referenceX);
+  placement=floorPlacement(state.modelHeight,r.fieldH,W,H,dx+vx*dw,dy+vy*dh,state.cameraHeight);
  }
  const {size,top}=placement,x=placement.x??referenceX;
+ const behindFloor=config.floorVanishing&&placement.feet<dy+dh*.765;
+ if(behindFloor)$('photoLimit').textContent+=' Das Motiv liegt hinter der darstellbaren Bodenfläche.';
+ else if(top>H||top+size<0)$('photoLimit').textContent+=' Das Motiv liegt ausserhalb des Bildausschnitts. Kamerahöhe oder Brennweite anpassen.';
+ c.save();c.beginPath();c.rect(dx,dy,dw,dh);c.clip();
  // Only the original cloister floor receives a contact shadow; no floor is added.
- if(config.floorVanishing&&placement.feet<H&&placement.feet>0){
+ if(!behindFloor&&config.floorVanishing&&placement.feet<H&&placement.feet>0){
   c.save();c.fillStyle='#17100c55';c.filter=`blur(${Math.max(1,size*.008)}px)`;
   c.beginPath();c.ellipse(x,placement.feet-1,size*.12/state.anamorphic,Math.max(1,size*.012),0,0,Math.PI*2);c.fill();c.restore();
  }
  const crop=subjectCrops[state.model][config.light],width=size*crop[2]/crop[3]/state.anamorphic;
- c.save();c.filter=`brightness(${config.exposure})`+(state.diffraction?` blur(${Math.min(30,r.airy*pixelsPerMm*.35)}px)`:'');c.drawImage(person.image,...crop,x-width/2,top,width,size);c.restore();
+ c.save();c.filter=`brightness(${config.exposure})`+(state.diffraction?` blur(${Math.min(30,r.airy*pixelsPerMm*.35)}px)`:'');if(!behindFloor)c.drawImage(person.image,...crop,x-width/2,top,width,size);c.restore();c.restore();
  if(state.grid){c.strokeStyle='#ffffff99';c.lineWidth=1;for(let i=1;i<3;i++){c.beginPath();c.moveTo(W*i/3,0);c.lineTo(W*i/3,H);c.moveTo(0,H*i/3);c.lineTo(W,H*i/3);c.stroke();}}
  canvas.setAttribute('aria-label',config.name+', '+{woman:'Frau',man:'Mann',child:'Kind',dog:'Hund'}[state.model]+', '+['Tageslicht','Abendlicht','Warmes Seitenlicht'][config.light]+'. Fotomontage zur Schärfentiefe.');
 }
