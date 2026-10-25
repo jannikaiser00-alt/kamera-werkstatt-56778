@@ -66,3 +66,12 @@ Prüfung: 624 Kombinationen aus Motivhöhe, Entfernung und Hoch-/Querformat best
 Für den Kreuzgang gibt es eine eigene Platzierung auf dem vorhandenen Fotoboden. Der visuell gewählte Fluchtpunkt wird mit demselben Bildausschnitt und Zoom wie das Foto transformiert. Fussposition und horizontale Position laufen beim Verkleinern entlang derselben Fluchtlinie nach hinten. Ein dezenter Kontaktschatten sitzt direkt unter dem Motiv. Es wird kein Boden ergänzt. Bei Landschaften bleibt der Beschnitt an der unteren Bildkante bestehen. Die Perspektive ist eine visuelle Anpassung an das Foto, keine metrische Raumrekonstruktion.
 
 18 geometrische Flucht-/Bodenkontaktprüfungen und 24 Browserkombinationen aus vier Motiven, drei Entfernungen und zwei Formaten bestanden. Keine protokollierten JavaScript-Fehler. Die 624 Randplatzierungsprüfungen für Landschaften bestehen weiter.
+
+
+## Abschlussaudit und Teilen-Funktion · 25.10.2026
+
+Ergebnis: Nein, Rechnung und Abbildung sind nicht als zu 100 Prozent physikalisch exakt bestätigt. In den geprüften Kernberechnungen des idealen Dünnlinsenmodells wurde kein Fehler gefunden. Die 39 Rechentestgruppen bestehen; zusätzlich wurden 525 Kombinationen über unabhängig berechnete Bildweiten (1/f = 1/s + 1/v) gegen Hintergrundunschärfe und Schärfegrenzen geprüft. Die 624 Randplatzierungsfälle und 18 Flucht-/Bodenkontaktfälle bestehen. Frühere Browsermatrizen sind historische Prüfungen, keine erneute vollständige Liveprüfung dieser Version.
+
+Verbleibende konkrete Darstellungsabweichungen: Alle Pixel des Hintergrundfotos erhalten dieselbe Entfernung. Daher wird auch der Boden unmittelbar am fokussierten Motiv wie der entfernte Hintergrund unscharf. Vorhandene Unschärfe des Originalfotos bleibt erhalten. Perspektive, Kontaktfläche und Beleuchtung sind visuell angepasst, nicht aus einer vermessenen 3D-Szene berechnet. Fotozoom und Unschärfefilter sind begrenzt. Beugung und anamorphotische Darstellung sind Näherungen. Ein echter Objektiv-/Kameraaufbau kann daher anders aussehen.
+
+Teilen-Schaltfläche, Ereignisbehandlung und überholte Hilfe dazu entfernt. Falsche barrierefreie Lichtbeschreibung im Kreuzgang korrigiert. Frischer Browsercheck: Brennweite 50 mm, Blende 8, Fokus 3 m, Vollformat mit Standard-CoC ergibt Nahgrenze 2.36 m, Ferngrenze 4.12 m, Gesamtbereich 1.76 m; kein Teilen-Knopf und keine protokollierten JavaScript-Fehler.
