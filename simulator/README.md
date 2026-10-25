@@ -75,3 +75,15 @@ Ergebnis: Nein, Rechnung und Abbildung sind nicht als zu 100 Prozent physikalisc
 Verbleibende konkrete Darstellungsabweichungen: Alle Pixel des Hintergrundfotos erhalten dieselbe Entfernung. Daher wird auch der Boden unmittelbar am fokussierten Motiv wie der entfernte Hintergrund unscharf. Vorhandene Unschärfe des Originalfotos bleibt erhalten. Perspektive, Kontaktfläche und Beleuchtung sind visuell angepasst, nicht aus einer vermessenen 3D-Szene berechnet. Fotozoom und Unschärfefilter sind begrenzt. Beugung und anamorphotische Darstellung sind Näherungen. Ein echter Objektiv-/Kameraaufbau kann daher anders aussehen.
 
 Teilen-Schaltfläche, Ereignisbehandlung und überholte Hilfe dazu entfernt. Falsche barrierefreie Lichtbeschreibung im Kreuzgang korrigiert. Frischer Browsercheck: Brennweite 50 mm, Blende 8, Fokus 3 m, Vollformat mit Standard-CoC ergibt Nahgrenze 2.36 m, Ferngrenze 4.12 m, Gesamtbereich 1.76 m; kein Teilen-Knopf und keine protokollierten JavaScript-Fehler.
+
+## Gemeinsame Projektion · 25.10.2026
+
+Die vorherige Untergrenze des Fotozooms hielt den Hintergrund bei kurzen Brennweiten konstant. Sie ist entfernt. Foto und Motiv verwenden nun dieselbe Bildweite f · (1 + Abbildungsmassstab) und Sensorabmessungen. Auch die angezeigte horizontale Bildwinkelberechnung berücksichtigt diese Bildweite. Der separate, nicht räumlich konsistente Schalter zur Hintergrund-Entfernungsskalierung wurde entfernt.
+
+Die fünf gelieferten JPEG-Originale wurden auf EXIF geprüft: Brennweite, 35-mm-Äquivalent und Kameramodell fehlen. Die Foto-Projektion verwendet deshalb ausdrücklich angenommene 12 mm / Vollformat als Referenz, sichtbar unter der Vorschau. Das ist keine bekannte Originalbrennweite. Fehlende Bildbereiche werden nicht erfunden, Motiv und Schatten werden auf vorhandene Fotofläche beschnitten.
+
+Der Kreuzgang verwendet eine angenäherte Bodenebene und 1.25 m Kamerahöhe (unter Erweitert veränderbar). Die Fussposition hängt von Kamerahöhe und Entfernung ab, nicht mehr von der Grösse des Hundes oder der Person. Kein erzwungener Kopfrand verändert die Bodenposition. Motive hinter der darstellbaren Bodenfläche werden mit Hinweis ausgeblendet. Am Boden wird die Unschärfe zeilenweise anhand der Ebenentiefe berechnet; der Bodenfilter bleibt eine Gauß-Näherung. Wände, Landschaften und Licht sind weiterhin nicht dreidimensional rekonstruiert.
+
+Prüfung: 39 optische Testgruppen sowie 128 neue Projektionstests bestanden. Die Projektionstests prüfen unter anderem kontinuierlichen Fotozoom von 8 bis 1200 mm, Sensorwechsel, Formatwechsel und identischen Bodenkontakt unterschiedlich hoher Motive. 20 Browserwechsel (fünf Orte, Frau/Hund, 35/200 mm) luden ohne protokollierte JavaScript-Fehler. Desktop und 390-Pixel-Mobilansicht visuell kontrolliert.
+
+Kein Anspruch auf vollständige physikalische Genauigkeit: Referenzkamera, Fluchtpunkt und Bodenmaske sind Annahmen. Für eine quantitativ korrekte Raumdarstellung braucht es Aufnahmekalibrierung, Tiefendaten und zusätzliche Bildinformation bzw. ein echtes 3D-Modell. Ein einzelnes Foto kann insbesondere nicht die bei einer Kamerabewegung sichtbar werdenden Flächen liefern.
