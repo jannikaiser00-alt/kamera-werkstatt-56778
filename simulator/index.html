@@ -149,8 +149,19 @@ window.addEventListener('hashchange',()=>{fromHash();render();persist();});
 $('helpBtn').onclick=$('mathBtn').onclick=()=>$('helpDialog').showModal();$('closeHelp').onclick=()=>$('helpDialog').close();
 $('saveBtn').onclick=()=>{if(saved.length>=40){notify('Bis zu 40 Vergleiche. Entferne zuerst eine Variante.');return;}saved.push({...state});saveRows();renderSaved();notify(storageOK?'Einstellungen gespeichert.':'Speicherung blockiert: Vergleich bleibt nur bis zum Schliessen verfügbar.');};
 function saveRows(){try{localStorage.setItem('fa-dof-saved-v1',JSON.stringify(saved));}catch{storageOK=false;}}
-function renderSaved(){const value=p=>sortKey==='focal'?optics(p).f:sortKey==='aperture'?optics(p).N:p.distance;const rows=saved.map((p,i)=>({p,i})).sort((a,b)=>sortDirection*(value(a.p)-value(b.p)));document.querySelectorAll('[data-sort]').forEach(b=>b.closest('th').setAttribute('aria-sort',b.dataset.sort===sortKey?(sortDirection===1?'ascending':'descending'):'none'));$('empty').hidden=rows.length>0;$('savedTable').hidden=!rows.length;$('savedBody').innerHTML=rows.map(({p,i})=>{const r=optics(p);return `<tr><td><button data-load="${i}" aria-label="Variante ${i+1} laden">${fmt(r.f,1)} mm</button></td><td>f/${fmt(r.N,1)}</td><td>${distance(p.distance)}</td><td>${fmt(p.width,1)} × ${fmt(p.height,1)}</td><td>${r.diffractionLimited?'Kein Bereich':distance(r.total)}</td><td><button data-delete="${i}" aria-label="Variante ${i+1} entfernen">×</button></td></tr>`;}).join('');$('savedBody').querySelectorAll('tr').forEach((row,index)=>{row.onclick=e=>{if(e.target.closest('[data-delete]'))return;state=sanitize(rows[index].p);render();persist();notify('Gespeicherte Variante geladen.');};});$('savedBody').querySelectorAll('[data-delete]').forEach(b=>b.onclick=()=>{saved.splice(Number(b.dataset.delete),1);saveRows();renderSaved();});}
+let savedRenderKey='';
+function renderSaved(){const key=JSON.stringify([saved,sortKey,sortDirection,state.units]);if(key===savedRenderKey)return;savedRenderKey=key;const value=p=>sortKey==='focal'?optics(p).f:sortKey==='aperture'?optics(p).N:p.distance;const rows=saved.map((p,i)=>({p,i})).sort((a,b)=>sortDirection*(value(a.p)-value(b.p)));document.querySelectorAll('[data-sort]').forEach(b=>b.closest('th').setAttribute('aria-sort',b.dataset.sort===sortKey?(sortDirection===1?'ascending':'descending'):'none'));$('empty').hidden=rows.length>0;$('savedTable').hidden=!rows.length;$('savedBody').innerHTML=rows.map(({p,i})=>{const r=optics(p);return `<tr><td><button data-load="${i}" aria-label="Variante ${i+1} laden">${fmt(r.f,1)} mm</button></td><td>f/${fmt(r.N,1)}</td><td>${distance(p.distance)}</td><td>${fmt(p.width,1)} × ${fmt(p.height,1)}</td><td>${r.diffractionLimited?'Kein Bereich':distance(r.total)}</td><td><button data-delete="${i}" aria-label="Variante ${i+1} entfernen">×</button></td></tr>`;}).join('');$('savedBody').querySelectorAll('tr').forEach((row,index)=>{row.onclick=e=>{if(e.target.closest('[data-delete]'))return;state=sanitize(rows[index].p);render();persist();notify('Gespeicherte Variante geladen.');};});$('savedBody').querySelectorAll('[data-delete]').forEach(b=>b.onclick=()=>{saved.splice(Number(b.dataset.delete),1);saveRows();renderSaved();});}
 document.querySelectorAll('[data-sort]').forEach(b=>b.onclick=()=>{sortDirection=sortKey===b.dataset.sort?-sortDirection:1;sortKey=b.dataset.sort;renderSaved();});
+// Coalesce input bursts; refine once interaction has been idle for 180 ms.
+let sceneFrame=0,refineTimer=0,sceneFast=false;
+function queueScene(){
+ sceneFast=true;clearTimeout(refineTimer);
+ if(!sceneFrame)sceneFrame=requestAnimationFrame(()=>{sceneFrame=0;drawScene(optics(state),true);});
+ refineTimer=setTimeout(()=>{refineTimer=0;if(sceneFrame){cancelAnimationFrame(sceneFrame);sceneFrame=0;}sceneFast=false;drawScene(optics(state),false);},180);
+}
+function finishScene(){
+ clearTimeout(refineTimer);refineTimer=0;if(sceneFrame){cancelAnimationFrame(sceneFrame);sceneFrame=0;}sceneFast=false;drawScene(optics(state),false);
+}
 function render(forceInputs=false){
  const r=optics(state);document.body.classList.toggle('advanced-mode',state.advanced);
  for(const key of Object.keys(defaults)){const el=$(key);if(!el)continue;if(el.type==='checkbox')el.checked=state[key];else{if(!forceInputs&&el===document.activeElement&&el.type==='number')continue;let v=state[key];if(['distance','background'].includes(key)&&state.units==='imperial')v/=.3048;el.value=typeof v==='number'?Number(v.toFixed(['customCoc'].includes(key)?4:3)):v;}}
@@ -174,7 +185,7 @@ function render(forceInputs=false){
  $('customCocLabel').hidden=state.cocMode!=='custom';$('printWidthLabel').hidden=state.cocMode!=='print';$('outputPixelsLabel').hidden=state.cocMode!=='pixels';
  $('warning').textContent=r.diffractionLimited?'Die Beugung ist grösser als das gewählte Schärfekriterium. Auch die Fokusebene erfüllt dieses Kriterium nicht.':r.magnification>.1?'Nahaufnahme: Reale Objektive können wegen Innenfokussierung und Pupillenmassstab deutlich abweichen.':'';
  $('activeOptions').textContent=[state.converter!==1?'Konverter '+state.converter+'×':'',state.anamorphic!==1?'Anamorphot '+state.anamorphic+'×':'',state.diffraction?'Beugung an':'',state.video?'16:9':'',state.cocMode!=='standard'?'Eigenes Schärfekriterium':''].filter(Boolean).join(' · ');
- drawDiagram(r);renderSaved();cancelAnimationFrame(frame);frame=requestAnimationFrame(()=>drawScene(r));
+ drawDiagram(r);renderSaved();queueScene();
 }
 let dragging=null,dragMax=25;
 function drawDiagram(r){
@@ -287,7 +298,7 @@ let photoReady=false;
 function asset(name){
  if(photoCache.has(name))return photoCache.get(name);
  const record={image:null,error:false};photoCache.set(name,record);
- record.promise=fetch('assets-v3/'+name+'.json').then(r=>{if(!r.ok)throw Error('Bild fehlt');return r.json();}).then(data=>new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>{record.image=im;resolve(im);};im.onerror=reject;im.src=data.src;})).catch(()=>{record.error=true;}).finally(()=>{drawScene(optics(state));});
+ record.promise=fetch('assets-v3/'+name+'.json').then(r=>{if(!r.ok)throw Error('Bild fehlt');return r.json();}).then(data=>new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>{record.image=im;resolve(im);};im.onerror=reject;im.src=data.src;})).catch(()=>{record.error=true;}).finally(()=>{queueScene();});
  return record;
 }
 $('retryPhotos').onclick=()=>{for(const [key,value]of photoCache)if(value.error)photoCache.delete(key);drawScene(optics(state));};
@@ -305,13 +316,13 @@ function apertureKernel(type,count){
  }
  const mean=points.reduce((a,p)=>[a[0]+p[0]/count,a[1]+p[1]/count],[0,0]);points.forEach(p=>{p[0]-=mean[0];p[1]-=mean[1];});kernelCache.set(key,points);return points;
 }
-function blurPhoto(ctx,W,H,radius,type,stretch){
+function blurPhoto(ctx,W,H,radius,type,stretch,fast=false){
  if(radius<.6){ctx.drawImage(bg,0,0,W,H);return;}
- const down=Math.min(1,720/W,720/H),w=Math.max(2,Math.round(W*down)),h=Math.max(2,Math.round(H*down)),rad=Math.min(radius*down,Math.max(w,h)*1.5),pad=Math.ceil(rad+3);
+ const down=Math.min(1,(fast?320:720)/W,(fast?320:720)/H),w=Math.max(2,Math.round(W*down)),h=Math.max(2,Math.round(H*down)),rad=Math.min(radius*down,Math.max(w,h)*1.5),pad=Math.ceil(rad+3);
  padded.width=w+pad*2;padded.height=h+pad*2;const p=padded.getContext('2d');p.drawImage(bg,0,0,W,H,pad,pad,w,h);
  p.drawImage(bg,0,0,1,H,0,pad,pad,h);p.drawImage(bg,W-1,0,1,H,pad+w,pad,pad,h);p.drawImage(bg,0,0,W,1,pad,0,w,pad);p.drawImage(bg,0,H-1,W,1,pad,pad+h,w,pad);
  for(const [sx,sy,dx,dy]of [[0,0,0,0],[W-1,0,w+pad,0],[0,H-1,0,h+pad],[W-1,H-1,w+pad,h+pad]])p.drawImage(bg,sx,sy,1,1,dx,dy,pad,pad);
- blurred.width=w;blurred.height=h;const b=blurred.getContext('2d'),count=rad>25?128:64;b.globalCompositeOperation='source-over';
+ blurred.width=w;blurred.height=h;const b=blurred.getContext('2d'),count=fast?12:rad>25?128:64;b.globalCompositeOperation='source-over';
  let sample=0;for(const [x,y]of apertureKernel(type,count)){b.globalAlpha=1/(++sample);b.drawImage(padded,-pad+x*rad*stretch,-pad+y*rad);}
  ctx.drawImage(blurred,0,0,W,H);
 }
@@ -336,10 +347,10 @@ function floorPlacement(modelHeight,fieldHeight,W,H,vx,vy,cameraHeight=1.25){
  return {size,top:feet-size,x:vx-.35*pixelsPerMetre,feet};
 }
 // Approximate continuous ground plane; only the photographed floor is affected.
-function drawFloor(ctx,W,H,r,projection,config){
+function drawFloor(ctx,W,H,r,projection,config,fast=false){
  const {dx,dy,dw,dh}=projection,hy=dy+config.floorVanishing[1]*dh;
  ctx.save();ctx.beginPath();ctx.moveTo(dx,dy+dh);ctx.lineTo(dx,dy+dh*.88);ctx.lineTo(dx+dw*.27,dy+dh*.765);ctx.lineTo(dx+dw*.80,dy+dh*.765);ctx.lineTo(dx+dw,dy+dh*.94);ctx.lineTo(dx+dw,dy+dh);ctx.closePath();ctx.clip();
- const step=Math.max(2,H/48),s=state.distance*1000;
+ const step=Math.max(2,H/(fast?12:48)),s=state.distance*1000;
  for(let y=Math.max(0,dy+dh*.765);y<H;y+=step){
   const depth=state.cameraHeight*H/r.fieldH*state.distance/Math.max(1,y+step/2-hy)*1000;
   const circle=Math.abs(r.f*r.f*(depth-s)/(r.N*depth*(s-r.f)));
@@ -359,17 +370,19 @@ function headAim(placement,H,model,panX,panY,W){
 const view=$('sceneCanvas');view.tabIndex=0;view.style.touchAction='none';view.style.cursor='grab';view.setAttribute('aria-describedby','photoLimit');
 let panDrag=null;
 view.addEventListener('pointerdown',e=>{if(e.button!==0)return;panDrag={id:e.pointerId,x:e.clientX,y:e.clientY,px:state.panX,py:state.panY};view.setPointerCapture(e.pointerId);view.style.cursor='grabbing';});
-view.addEventListener('pointermove',e=>{if(!panDrag||panDrag.id!==e.pointerId)return;const rect=view.getBoundingClientRect();state.panX=clamp(panDrag.px+(e.clientX-panDrag.x)/rect.width,-2,2);state.panY=clamp(panDrag.py+(e.clientY-panDrag.y)/rect.height,-2,2);cancelAnimationFrame(frame);frame=requestAnimationFrame(()=>drawScene(optics(state)));});
+view.addEventListener('pointermove',e=>{if(!panDrag||panDrag.id!==e.pointerId)return;const rect=view.getBoundingClientRect();state.panX=clamp(panDrag.px+(e.clientX-panDrag.x)/rect.width,-2,2);state.panY=clamp(panDrag.py+(e.clientY-panDrag.y)/rect.height,-2,2);queueScene();});
 function finishPan(){if(panDrag){panDrag=null;view.style.cursor='grab';persist();}}
 view.addEventListener('pointerup',finishPan);view.addEventListener('pointercancel',finishPan);view.addEventListener('lostpointercapture',finishPan);
-view.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home'].includes(e.key))return;e.preventDefault();if(e.key==='Home')state.panX=state.panY=0;else{const step=e.shiftKey?.1:.02;if(e.key==='ArrowLeft')state.panX-=step;if(e.key==='ArrowRight')state.panX+=step;if(e.key==='ArrowUp')state.panY-=step;if(e.key==='ArrowDown')state.panY+=step;state=sanitize(state);}drawScene(optics(state));persist();});
+view.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home'].includes(e.key))return;e.preventDefault();if(e.key==='Home')state.panX=state.panY=0;else{const step=e.shiftKey?.1:.02;if(e.key==='ArrowLeft')state.panX-=step;if(e.key==='ArrowRight')state.panX+=step;if(e.key==='ArrowUp')state.panY-=step;if(e.key==='ArrowDown')state.panY+=step;state=sanitize(state);}queueScene();persist();});
 $('centerHead').onclick=()=>{state.panX=state.panY=0;drawScene(optics(state));persist();notify('Kopfzentrierung wiederhergestellt.');};
-function drawScene(r){
+function drawScene(r,fast=false){
+ const started=performance.now();
  const config=photoScenes[state.scene],photo=asset(config.asset),person=asset(state.model);
 
  const records=photo?[photo,person]:[person],failed=records.some(a=>a.error);photoReady=records.every(a=>a.image);
  $('photoStatus').hidden=photoReady;$('photoStatusText').textContent=failed?'Ein Foto konnte nicht geladen werden. Bitte erneut versuchen.':'Fotos und passende Lichtvariante werden geladen …';$('retryPhotos').hidden=!failed;$('exportBtn').disabled=!photoReady;
- const canvas=$('sceneCanvas'),g=geometry(state,r),{W,H,pixelsPerMm}=g;canvas.width=W;canvas.height=H;canvas.style.aspectRatio=W+'/'+H;const c=canvas.getContext('2d');
+ const canvas=$('sceneCanvas'),g=geometry(state,r),scale=fast?Math.min(1,600/Math.max(g.W,g.H)):1,W=Math.max(2,Math.round(g.W*scale)),H=Math.max(2,Math.round(g.H*scale)),pixelsPerMm=H/r.h;
+ if(canvas.width!==W||canvas.height!==H){canvas.width=W;canvas.height=H;}canvas.style.aspectRatio=g.W+'/'+g.H;const c=canvas.getContext('2d');c.clearRect(0,0,W,H);
  $('photoCaption').textContent=config.name+' · '+['Tageslicht','Abendlicht','Warmes Seitenlicht'][config.light];
  if(!photoReady){c.fillStyle='#e8edf3';c.fillRect(0,0,W,H);return;}
  document.querySelector('.scene-label').textContent='FOTO + KI-MOTIV';
@@ -383,9 +396,9 @@ function drawScene(r){
  const {dx,dy,dw,dh}=projection,{size}=placement,top=placement.top+aim.shiftY,x=(placement.x??referenceX)+aim.shiftX;
  const feet=top+size;
  $('photoLimit').textContent='Bild ziehen oder mit Pfeiltasten verschieben · «Auf Kopf zentrieren» setzt den Ausschnitt zurück. '+(config.floorVanishing?'Originalfoto mit angenäherter Boden-Tiefenebene.':'Originalfoto mit angenäherter Hintergrundebene.');
- bg.width=W;bg.height=H;const b=bg.getContext('2d');b.fillStyle='#e8edf3';b.fillRect(0,0,W,H);b.drawImage(im,dx,dy,dw,dh);
- blurPhoto(c,W,H,g.blurDiameter*.5,state.bokeh,1/state.anamorphic);
- if(config.floorVanishing)drawFloor(c,W,H,r,projection,config);
+ if(bg.width!==W||bg.height!==H){bg.width=W;bg.height=H;}const b=bg.getContext('2d');b.fillStyle='#e8edf3';b.fillRect(0,0,W,H);b.drawImage(im,dx,dy,dw,dh);
+ blurPhoto(c,W,H,r.totalBlur*pixelsPerMm*.5,state.bokeh,1/state.anamorphic,fast);
+ if(config.floorVanishing)drawFloor(c,W,H,r,projection,config,fast);
  if(config.floorVanishing&&feet<H&&feet>0){
   c.save();c.fillStyle='#17100c55';c.filter=`blur(${Math.max(1,size*.008)}px)`;
   c.beginPath();c.ellipse(x,feet-1,size*.12/state.anamorphic,Math.max(1,size*.012),0,0,Math.PI*2);c.fill();c.restore();
@@ -393,8 +406,9 @@ function drawScene(r){
  const crop=subjectCrops[state.model][config.light],width=size*crop[2]/crop[3]/state.anamorphic;
  c.save();c.filter=`brightness(${config.exposure})`+(state.diffraction?` blur(${Math.min(30,r.airy*pixelsPerMm*.35)}px)`:'');c.drawImage(person.image,...crop,x-width/2,top,width,size);c.restore();
  if(state.grid){c.strokeStyle='#ffffff99';c.lineWidth=1;for(let i=1;i<3;i++){c.beginPath();c.moveTo(W*i/3,0);c.lineTo(W*i/3,H);c.moveTo(0,H*i/3);c.lineTo(W,H*i/3);c.stroke();}}
+ canvas.dataset.drawMs=(performance.now()-started).toFixed(2);canvas.dataset.quality=fast?'preview':'full';canvas.dataset[fast?'previewMs':'fullMs']=canvas.dataset.drawMs;
  canvas.setAttribute('aria-label',config.name+', '+{woman:'Frau',man:'Mann',child:'Kind',dog:'Hund'}[state.model]+', '+['Tageslicht','Abendlicht','Warmes Seitenlicht'][config.light]+'. Fotomontage zur Schärfentiefe.');
 }
-$('exportBtn').onclick=()=>{drawScene(optics(state));if(!photoReady){notify('Bitte warten, bis die Fotos geladen sind.');return;}$('sceneCanvas').toBlob(blob=>{if(!blob){notify('Bildexport fehlgeschlagen.');return;}const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='fotografie-akademie-'+photoScenes[state.scene].asset+'.png';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);notify('Fotomontage als PNG exportiert.');},'image/png');};
+$('exportBtn').onclick=()=>{finishScene();if(!photoReady){notify('Bitte warten, bis die Fotos geladen sind.');return;}$('sceneCanvas').toBlob(blob=>{if(!blob){notify('Bildexport fehlgeschlagen.');return;}const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='fotografie-akademie-'+photoScenes[state.scene].asset+'.png';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);notify('Fotomontage als PNG exportiert.');},'image/png');};
 render();
 </script></body></html>
