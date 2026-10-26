@@ -107,3 +107,10 @@ Auf Wunsch des Auftraggebers zeigen wieder alle fünf Orte seine Originalfotos. 
 Bei Portraitvergrösserung zielt der Bildausschnitt horizontal auf die Motivmitte und vertikal auf den Kopf. Ein gemeinsamer Bildversatz bewegt Foto, Tiefenebene, Schatten und Motiv zusammen. Maus-/Touch-Ziehen, Pfeiltasten, Umschalt für grössere Schritte sowie Pos1 und «Auf Kopf zentrieren» werden unterstützt. Eine manuelle Verschiebung wird gespeichert und kann bewusst den Kopf aus dem Bild verschieben. Sehr starke Vergrösserung kann nur einen Teil des Kopfes zeigen. Ausserhalb vorhandener Bilddaten kann keine neue Umgebung entstehen.
 
 39 Rechentestgruppen und 224 neue Kopfziel-/Verschiebungsfälle bestanden. 20 Browserkombinationen aus fünf Orten und vier Motiven bei 200 mm geladen, ohne protokollierte JavaScript-Fehler. Ziehen und anschliessendes Zentrieren visuell geprüft; Portrait bei 85 mm und Hundekopf bei 200 mm kontrolliert.
+
+
+## Fluessigere Interaktion - 26.10.2026
+
+Eingabefolgen werden zu maximal einem ausstehenden Bild pro Animationsframe zusammengefasst. Bewegung: maximal 600 Pixel lange Kante, 12 Blendenabtastungen, 320-Pixel-Unschärfepuffer und 12 Bodenstreifen. Nach 180 ms ohne neue Eingabe folgt die bisherige volle Qualität (bis 1200 x 1600, 64/128 Blendenabtastungen, 48 Bodenstreifen). Der Export bricht ausstehende Vorschauarbeiten ab und berechnet synchron die volle Auflösung. Vergleichstabellen werden nur bei geänderten gespeicherten Werten, Sortierung oder Einheiten neu aufgebaut.
+
+Prüfung: 100 schnelle Aktualisierungen erzeugen nur einen ausstehenden Frame und verwenden den neuesten Zustand. Nachverfeinerung und Export-Abbruch ausstehender Frames getestet. Im Browser nach Ziehen 600 x 400 Vorschau und danach 1200 x 800 volle Qualität bestätigt. Keine protokollierten JavaScript-Fehler. 224 Kopf-/Verschiebungsfälle und 39 optische Testgruppen weiterhin bestanden. Keine geräteübergreifende FPS-Garantie; Bildqualität während Bewegung ist bewusst reduziert.
