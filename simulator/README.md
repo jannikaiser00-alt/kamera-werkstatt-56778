@@ -98,3 +98,12 @@ Der WebGL-2-Renderer integriert 48 Blendenpositionen mit einer idealen Dünnlins
 Prüfungen: 39 optische Testgruppen bestanden; 1542 unabhängige Strahl-/Ebenenvergleiche gegen analytische Unschärfedurchmesser und 1680 Massstabsprüfungen bestanden. 16 Browserfälle aus vier Motiven und 18/35/85/200 mm wurden jeweils bis zu 48 fertigen Samples gerendert, ohne protokollierte JavaScript-Fehler. Hund bei 50 mm, f/1.4, 3 m visuell geprüft: Bodenkontakt und Tiefenverlauf. PNG-Export tatsächlich gespeichert und als lesbares Bild mit 1200 × 800 Pixel verifiziert.
 
 Offene Grenzen: Der Raum ist kein vermessener Basler Kreuzgang. Personen und Hund bleiben zweidimensionale Fotokarten; sie sind keine 3D-Körper und besitzen keine rekonstruierte Eigenbeleuchtung oder Tiefenstruktur. Raumlicht ist ein vereinfachtes direktes Lichtmodell mit Umgebungsanteil, kein vollständiger Lichttransport. Kontaktabdunklung, Materialtexturen, Beugungsfilter, Anamorphot und endliche Strahlenabtastung bleiben Näherungen. Die anderen vier Orte bleiben Fotomontagen. Deshalb ist dies ein überprüfter 3D-Ausbau und keine Bestätigung vollständiger physikalischer Genauigkeit oder absoluter Fehlerfreiheit.
+
+
+## Originalfotos und Kopfsteuerung · 26.10.2026
+
+Auf Wunsch des Auftraggebers zeigen wieder alle fünf Orte seine Originalfotos. Die sichtbare synthetische Kreuzgang-Architektur wurde entfernt. Für den Kreuzgang wird eine unsichtbare Bodenebene zur angenäherten Tiefen- und Unschärfeberechnung verwendet; das ist keine vollständige 3D-Tiefenkarte des Fotos. Der Quellcode des eigenständigen 3D-Modells bleibt als separate Entwicklungsdatei erhalten, ist aber nicht mehr im aktiven Foto-Renderer eingebunden.
+
+Bei Portraitvergrösserung zielt der Bildausschnitt horizontal auf die Motivmitte und vertikal auf den Kopf. Ein gemeinsamer Bildversatz bewegt Foto, Tiefenebene, Schatten und Motiv zusammen. Maus-/Touch-Ziehen, Pfeiltasten, Umschalt für grössere Schritte sowie Pos1 und «Auf Kopf zentrieren» werden unterstützt. Eine manuelle Verschiebung wird gespeichert und kann bewusst den Kopf aus dem Bild verschieben. Sehr starke Vergrösserung kann nur einen Teil des Kopfes zeigen. Ausserhalb vorhandener Bilddaten kann keine neue Umgebung entstehen.
+
+39 Rechentestgruppen und 224 neue Kopfziel-/Verschiebungsfälle bestanden. 20 Browserkombinationen aus fünf Orten und vier Motiven bei 200 mm geladen, ohne protokollierte JavaScript-Fehler. Ziehen und anschliessendes Zentrieren visuell geprüft; Portrait bei 85 mm und Hundekopf bei 200 mm kontrolliert.
